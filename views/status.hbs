@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vetrina Bot Status</title>
+
+    <style>
+        * {
+            font-family: monospace;
+            font-weight: 100;
+        }
+        html, body {
+            height: 100%;
+            font-size: 22px;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .status-message::before {
+            margin-inline-end: 0.5rem;
+            content: "";
+            display: inline-block;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .status-message.okay::before {
+            background-color: lightgreen;
+        }
+        .status-message.error::before {
+            background-color: red;
+        }
+        center {
+            position: relative;
+            border-radius: 1rem;
+            border: solid 1px lightgray;
+            padding: 2.5rem 5rem;
+        }
+        .status-message {
+            position: absolute;
+            top: -1.25rem;
+            right: 1rem;
+            font-size: 0.7rem;
+        }
+        h1 {
+            margin: 0;
+        }
+        p {
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+        }
+        p.okay {
+            border: 3px solid lightgreen;
+        }
+        p.error {
+            border: 3px solid red;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div class="status-message {{ statusCode }}">
+            {{#equals statusCode 'okay'}}
+            All Systems Operational
+            {{else}}
+            Errors Detected
+            {{/equals}}
+        </div>
+        <h1>Vetrina Bot Status</h1>
+        <p class="{{ statusCode }}">
+            {{ message }}
+        </p>
+    </center>
+</body>
+</html>
