@@ -92,10 +92,18 @@ const StatusCode = {
 };
 
 router.get('/status', (req, res) => {
-    return res.render('status.hbs', {
-        botName: BOT_NAME,
-        message: isActive ? 'Gud!' : 'Bad!',
-        statusCode: isActive ? StatusCode.OKAY : StatusCode.ERROR,
+    axios.get(BOT_STATUS_API).then(data => {
+        return res.render('status.hbs', {
+            botName: BOT_NAME,
+            message: 'Gud!',
+            statusCode: StatusCode.OKAY,
+        });
+    }).catch(err => {
+        return res.render('status.hbs', {
+            botName: BOT_NAME,
+            message: 'Bad!',
+            statusCode: StatusCode.ERROR,
+        });
     });
 
 });
