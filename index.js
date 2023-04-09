@@ -82,7 +82,7 @@ cron.schedule(CRON_INTERVAL, () => {
 });
 
 router.use((req, res, next) => {
-    console.log(`| ${req.method} | ${req.hostname} | ${req.baseUrl}${req.path}`);
+    console.log(`| ${new Date().toISOString()} | ${req.method} | ${req.hostname} | ${req.baseUrl}${req.path}`);
     return next();
 });
 
