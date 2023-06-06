@@ -22,6 +22,20 @@ if (!WEBHOOK_URL) {
     throw new Error('No webhook URL defined in .env file.');
 }
 
+const log = console.log;
+const error = console.error;
+const warn = console.warn;
+
+console.log = function (...args) {
+    log.call(console, `\x1b[36m[LOG]  | ${new Date().toISOString()} |`, ...args);
+}
+console.warn = function (...args) {
+    warn.call(console, `\x1b[33m[WARN] | ${new Date().toISOString()} |`, ...args);
+}
+console.error = function (...args) {
+    error.call(console, `\x1b[31m[ERR]  | ${new Date().toISOString()} |`, ...args);
+}
+
 const router = Router();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -51,6 +65,8 @@ function sendMessageViaWebhook({title, description, color, mention }) {
                 ],
             }
         ],
+    }).catch((e) => {
+        console.error('Could not send Discord message.');
     });
 }
 
